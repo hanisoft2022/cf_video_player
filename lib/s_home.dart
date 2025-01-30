@@ -15,15 +15,9 @@ class _SHomeState extends State<SHome> {
   XFile? video;
 
   onLogoTapToChooseAnotherVideo() async {
-    final XFile? video = await ImagePicker().pickVideo(
-      source: ImageSource.gallery,
-    );
+    final XFile? video = await ImagePicker().pickVideo(source: ImageSource.gallery);
 
-    setState(
-      () {
-        this.video = video;
-      },
-    );
+    setState(() => this.video = video);
   }
 
   @override

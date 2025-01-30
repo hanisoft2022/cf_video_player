@@ -39,6 +39,12 @@ class FVideoPlayerState extends State<SVideoPlayer> {
   }
 
   @override
+  void dispose() {
+    videoPlayerController.dispose();
+    super.dispose();
+  }
+
+  @override
   void didUpdateWidget(covariant SVideoPlayer oldWidget) {
     super.didUpdateWidget(oldWidget);
 
@@ -54,14 +60,12 @@ class FVideoPlayerState extends State<SVideoPlayer> {
     videoPlayerController = VideoPlayerController.file(File(widget.video.path));
     await videoPlayerController.initialize();
     videoPlayerController.addListener(
-      () {
-        setState(
-          () {
-            isPlaying = videoPlayerController.value.isPlaying;
-            sliderValue = videoPlayerController.value.position.inSeconds.toDouble();
-          },
-        );
-      },
+      () => setState(
+        () {
+          isPlaying = videoPlayerController.value.isPlaying;
+          sliderValue = videoPlayerController.value.position.inSeconds.toDouble();
+        },
+      ),
     );
   }
 
@@ -76,17 +80,15 @@ class FVideoPlayerState extends State<SVideoPlayer> {
   }
 
   // 재생&정지 메서드
-  void onPlayPause() {
-    setState(
-      () {
-        if (isPlaying) {
-          videoPlayerController.pause();
-        } else {
-          videoPlayerController.play();
-        }
-      },
-    );
-  }
+  void onPlayPause() => setState(
+        () {
+          if (isPlaying) {
+            videoPlayerController.pause();
+          } else {
+            videoPlayerController.play();
+          }
+        },
+      );
 
   // 앞으로가기 메서드
   void onForward() {
@@ -123,7 +125,7 @@ class FVideoPlayerState extends State<SVideoPlayer> {
               // 화면 어둡게 하기
               if (showIcons)
                 Container(
-                  color: Colors.black.withOpacity(0.5),
+                  color: Colors.black.withValues(alpha: 0.5),
                   width: MediaQuery.of(context).size.width,
                   height: MediaQuery.of(context).size.height,
                 ),
@@ -139,20 +141,11 @@ class FVideoPlayerState extends State<SVideoPlayer> {
               // 현재 시각 - 슬라이더 - 영상 길이
               if (showIcons) WProgressBar(controller: videoPlayerController, onSliderChanged: onSliderChanged),
               // 다른 영상 선택 아이콘버튼
-              if (showIcons)
-                WChooseAnotherVideo(
-                  onPressed: widget.onChooseAnotherVideo,
-                ),
+              if (showIcons) WChooseAnotherVideo(onPressed: widget.onChooseAnotherVideo),
             ],
           ),
         ),
       ),
     );
-  }
-
-  @override
-  void dispose() {
-    videoPlayerController.dispose();
-    super.dispose();
   }
 }
