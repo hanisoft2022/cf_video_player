@@ -11,7 +11,6 @@ class VideoPlayerState {
   // [추가] 새로운 상태들
   final bool isLoading;
   final bool isBuffering;
-  final String? error;
 
   const VideoPlayerState({
     this.controller,
@@ -20,7 +19,6 @@ class VideoPlayerState {
     this.sliderValue = 0.0,
     this.isLoading = false,
     this.isBuffering = false,
-    this.error,
   });
 
   VideoPlayerState copyWith({
@@ -30,7 +28,6 @@ class VideoPlayerState {
     double? sliderValue,
     bool? isLoading,
     bool? isBuffering,
-    String? error,
   }) {
     return VideoPlayerState(
       controller: controller ?? this.controller,
@@ -39,7 +36,6 @@ class VideoPlayerState {
       sliderValue: sliderValue ?? this.sliderValue,
       isLoading: isLoading ?? this.isLoading,
       isBuffering: isBuffering ?? this.isBuffering,
-      error: error ?? this.error,
     );
   }
 }

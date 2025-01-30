@@ -1,16 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:video_player/video_player.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:vid_player/video_player/provider/video_player_provider.dart';
 
-class WProgressBar extends StatelessWidget {
-  final VideoPlayerController controller;
-
-  final ValueChanged<double> onSliderChanged;
-
-  const WProgressBar({
-    super.key,
-    required this.controller,
-    required this.onSliderChanged,
-  });
+class WProgressBar extends ConsumerWidget {
+  const WProgressBar({super.key});
 
   String _formatDuration(Duration duration) {
     String twoDigits(int n) => n.toString().padLeft(2, '0');
@@ -21,7 +14,10 @@ class WProgressBar extends StatelessWidget {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final notifier = ref.watch(videoPlayerProvider.notifier);
+    final videoState = ref.watch(videoPlayerProvider);
+
     return Positioned(
       bottom: 0,
       right: 0,
@@ -32,7 +28,7 @@ class WProgressBar extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.only(left: 8.0),
             child: Text(
-              _formatDuration(controller.value.position),
+              _formatDuration(videoState.controller!.value.position),
               style: const TextStyle(color: Colors.white),
             ),
           ),
@@ -40,9 +36,9 @@ class WProgressBar extends StatelessWidget {
           Expanded(
             child: Slider(
               min: 0.0,
-              max: controller.value.duration.inSeconds.toDouble(),
-              value: controller.value.position.inSeconds.toDouble(),
-              onChanged: onSliderChanged,
+              max: videoState.controller!.value.duration.inSeconds.toDouble(),
+              value: videoState.controller!.value.position.inSeconds.toDouble(),
+              onChanged: notifier.onSliderChanged,
               activeColor: Colors.blue,
             ),
           ),
@@ -50,7 +46,7 @@ class WProgressBar extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.only(right: 8.0),
             child: Text(
-              _formatDuration(controller.value.duration),
+              _formatDuration(videoState.controller!.value.duration),
               style: const TextStyle(color: Colors.white),
             ),
           ),
