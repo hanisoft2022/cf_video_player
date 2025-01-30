@@ -11,12 +11,11 @@ class SHome extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final notifier = ref.watch(videoTapProvider.notifier);
     final video = ref.watch(videoTapProvider);
 
     return Scaffold(
       backgroundColor: Colors.black,
-      body: video == null ? const SVideoSelector() : SVideoPlayer(video: video, onChooseAnotherVideo: notifier.onTap),
+      body: video == null ? const SVideoSelector() : SVideoPlayer(video: video),
     );
   }
 }

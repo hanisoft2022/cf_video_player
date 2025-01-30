@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:vid_player/common/video_tap_provider.dart';
 import 'package:vid_player/video_player/provider/video_player_provider.dart';
 import 'package:vid_player/video_player/w_play_buttons.dart';
 import 'package:vid_player/video_player/w_choose_another_video.dart';
@@ -10,12 +11,10 @@ import 'package:video_player/video_player.dart';
 
 class SVideoPlayer extends ConsumerStatefulWidget {
   final XFile video;
-  final VoidCallback onChooseAnotherVideo;
 
   const SVideoPlayer({
     super.key,
     required this.video,
-    required this.onChooseAnotherVideo,
   });
 
   @override
@@ -108,6 +107,7 @@ class FVideoPlayerState extends ConsumerState<SVideoPlayer> {
 
   @override
   Widget build(BuildContext context) {
+    final tapNotifier = ref.watch(videoTapProvider.notifier);
     final notifier = ref.watch(videoPlayerProvider.notifier);
     final showIcons = ref.watch(videoPlayerProvider.notifier).showIcons;
 
@@ -141,7 +141,7 @@ class FVideoPlayerState extends ConsumerState<SVideoPlayer> {
               // 현재 시각 - 슬라이더 - 영상 길이
               if (showIcons) WProgressBar(controller: videoPlayerController, onSliderChanged: onSliderChanged),
               // 다른 영상 선택 아이콘버튼
-              if (showIcons) WChooseAnotherVideo(onPressed: widget.onChooseAnotherVideo),
+              if (showIcons) WChooseAnotherVideo(onPressed: tapNotifier.onTap),
             ],
           ),
         ),
