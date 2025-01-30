@@ -1,12 +1,14 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:vid_player/video_player/provider/video_player_provider.dart';
 import 'package:vid_player/video_player/w_play_buttons.dart';
 import 'package:vid_player/video_player/w_choose_another_video.dart';
 import 'package:vid_player/video_player/w_progress_bar.dart';
 import 'package:video_player/video_player.dart';
 
-class SVideoPlayer extends StatefulWidget {
+class SVideoPlayer extends ConsumerStatefulWidget {
   final XFile video;
   final VoidCallback onChooseAnotherVideo;
 
@@ -20,16 +22,13 @@ class SVideoPlayer extends StatefulWidget {
   FVideoPlayerState createState() => FVideoPlayerState();
 }
 
-class FVideoPlayerState extends State<SVideoPlayer> {
+class FVideoPlayerState extends ConsumerState<SVideoPlayer> {
   // 비디오 플레이어 컨트롤러
   late VideoPlayerController videoPlayerController;
   // 비디오 상태 변수
   bool isPlaying = false;
   // 슬라이더 위치값 변수
   double sliderValue = 0.0;
-  // 아이콘, 슬라이더, 비디오 선택 버튼 등이 보이는지 여부
-  // 초기에는 안 보이게
-  bool showIcons = true;
 
   @override
   void initState() {
@@ -107,12 +106,13 @@ class FVideoPlayerState extends State<SVideoPlayer> {
     videoPlayerController.seekTo(goalPosition);
   }
 
-  _toggleControls() => setState(() => showIcons = !showIcons);
-
   @override
   Widget build(BuildContext context) {
+    final notifier = ref.watch(videoPlayerProvider.notifier);
+    final showIcons = ref.watch(videoPlayerProvider.notifier).showIcons;
+
     return GestureDetector(
-      onTap: _toggleControls,
+      onTap: notifier.toggleIcons,
       child: Center(
         // 비율 유지 위젯
         child: AspectRatio(
