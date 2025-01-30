@@ -109,7 +109,7 @@ class FVideoPlayerState extends ConsumerState<SVideoPlayer> {
   Widget build(BuildContext context) {
     final tapNotifier = ref.watch(videoTapProvider.notifier);
     final notifier = ref.watch(videoPlayerProvider.notifier);
-    final showIcons = ref.watch(videoPlayerProvider.notifier).showIcons;
+    final showIcons = ref.watch(videoPlayerProvider).showIcons;
 
     return GestureDetector(
       onTap: notifier.toggleIcons,
