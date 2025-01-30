@@ -19,11 +19,7 @@ class _SHomeState extends State<SHome> {
       source: ImageSource.gallery,
     );
 
-    setState(
-      () {
-        this.video = video;
-      },
-    );
+    setState(() => this.video = video);
   }
 
   @override
