@@ -16,13 +16,27 @@ class SVideoPlayer extends ConsumerStatefulWidget {
 }
 
 class SVideoPlayerState extends ConsumerState<SVideoPlayer> {
+  String? _currentVideoPath;
+
   @override
   void initState() {
     super.initState();
+    _initializeController();
+  }
 
+  void _initializeController() {
     final video = ref.read(videoTapProvider);
-
+    _currentVideoPath = video?.path;
     ref.read(videoPlayerProvider.notifier).initializeController(video!.path);
+  }
+
+  @override
+  void didUpdateWidget(SVideoPlayer oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    final newVideo = ref.read(videoTapProvider);
+    if (newVideo?.path != _currentVideoPath) {
+      _initializeController();
+    }
   }
 
   @override
