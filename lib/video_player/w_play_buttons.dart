@@ -1,21 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:vid_player/video_player/provider/provider.dart';
 
-class WPlayButtons extends StatelessWidget {
-  final VoidCallback onRewind;
-  final VoidCallback onPlayPause;
-  final VoidCallback onForward;
-  final bool isPlaying;
-
-  const WPlayButtons({
-    super.key,
-    required this.onRewind,
-    required this.onPlayPause,
-    required this.onForward,
-    required this.isPlaying,
-  });
+class WPlayButtons extends ConsumerWidget {
+  const WPlayButtons({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final isPlaying = ref.watch(videoPlayerProvider);
+    final onRewind = ref.read(videoPlayerProvider.notifier).onRewind;
+    final onPlayPause = ref.read(videoPlayerProvider.notifier).onPlayPause;
+    final onForward = ref.read(videoPlayerProvider.notifier).onForward;
+
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [

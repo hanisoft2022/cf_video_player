@@ -3,10 +3,15 @@ import 'package:gap/gap.dart';
 import 'package:vid_player/video_selector/w_logo.dart';
 import 'package:vid_player/video_selector/w_title.dart';
 
-class SVideoSelector extends StatelessWidget {
-  final VoidCallback onTap;
+LinearGradient customGradient() {
+  return const LinearGradient(
+      colors: [Colors.blue, Colors.black],
+      begin: Alignment.topCenter,
+      end: Alignment.bottomCenter);
+}
 
-  const SVideoSelector({super.key, required this.onTap});
+class SVideoSelector extends StatelessWidget {
+  const SVideoSelector({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -15,21 +20,14 @@ class SVideoSelector extends StatelessWidget {
         gradient: customGradient(),
       ),
       width: double.infinity,
-      child: Column(
+      child: const Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          WLogo(onTap: onTap),
-          const Gap(10),
-          const WTitle(),
+          WLogo(),
+          Gap(10),
+          WTitle(),
         ],
       ),
     );
   }
-}
-
-LinearGradient customGradient() {
-  return const LinearGradient(
-      colors: [Colors.blue, Colors.black],
-      begin: Alignment.topCenter,
-      end: Alignment.bottomCenter);
 }

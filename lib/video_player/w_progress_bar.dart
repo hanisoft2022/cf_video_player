@@ -1,16 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:video_player/video_player.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:vid_player/video_player/provider/provider.dart';
 
-class WProgressBar extends StatelessWidget {
-  final VideoPlayerController controller;
-
-  final ValueChanged<double> onSliderChanged;
-
-  const WProgressBar({
-    super.key,
-    required this.controller,
-    required this.onSliderChanged,
-  });
+class WProgressBar extends ConsumerWidget {
+  const WProgressBar({super.key});
 
   String _formatDuration(Duration duration) {
     String twoDigits(int n) => n.toString().padLeft(2, '0');
@@ -21,7 +14,12 @@ class WProgressBar extends StatelessWidget {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final controller =
+        ref.watch(videoPlayerProvider.notifier).videoPlayerController;
+    final onSliderChanged =
+        ref.read(videoPlayerProvider.notifier).onSliderChanged;
+
     return Positioned(
       bottom: 0,
       right: 0,
