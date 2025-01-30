@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:image_picker/image_picker.dart';
+import 'package:vid_player/common/video_tap_provider.dart';
 
 import 'package:vid_player/video_player/provider/video_player_provider.dart';
 import 'package:vid_player/video_player/w_play_buttons.dart';
@@ -9,12 +9,7 @@ import 'package:vid_player/video_player/w_progress_bar.dart';
 import 'package:video_player/video_player.dart';
 
 class SVideoPlayer extends ConsumerStatefulWidget {
-  final XFile video;
-
-  const SVideoPlayer({
-    super.key,
-    required this.video,
-  });
+  const SVideoPlayer({super.key});
 
   @override
   SVideoPlayerState createState() => SVideoPlayerState();
@@ -25,27 +20,24 @@ class SVideoPlayerState extends ConsumerState<SVideoPlayer> {
   void initState() {
     super.initState();
 
-    ref.read(videoPlayerProvider.notifier).initializeController(widget.video.path);
-  }
+    final video = ref.read(videoTapProvider);
 
-  @override
-  void dispose() {
-    super.dispose();
-  }
-
-  @override
-  void didUpdateWidget(covariant SVideoPlayer oldWidget) {
-    super.didUpdateWidget(oldWidget);
-
-    if (oldWidget.video.path != widget.video.path) {
-      ref.read(videoPlayerProvider.notifier).initializeController(widget.video.path);
-    }
+    ref.read(videoPlayerProvider.notifier).initializeController(video!.path);
   }
 
   @override
   Widget build(BuildContext context) {
     final notifier = ref.watch(videoPlayerProvider.notifier);
     final videoState = ref.watch(videoPlayerProvider);
+
+    ref.listen(
+      videoTapProvider,
+      (previous, next) {
+        if (previous!.path != next!.path) {
+          notifier.initializeController(next.path);
+        }
+      },
+    );
 
     // 로딩 상태 처리
     if (videoState.controller == null || videoState.isLoading) {

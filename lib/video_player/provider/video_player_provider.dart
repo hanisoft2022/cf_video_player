@@ -10,7 +10,6 @@ class VideoPlayerState {
   final double sliderValue;
   // [추가] 새로운 상태들
   final bool isLoading;
-  final bool isBuffering;
 
   const VideoPlayerState({
     this.controller,
@@ -18,7 +17,6 @@ class VideoPlayerState {
     this.showIcons = true,
     this.sliderValue = 0.0,
     this.isLoading = false,
-    this.isBuffering = false,
   });
 
   VideoPlayerState copyWith({
@@ -35,7 +33,6 @@ class VideoPlayerState {
       showIcons: showIcons ?? this.showIcons,
       sliderValue: sliderValue ?? this.sliderValue,
       isLoading: isLoading ?? this.isLoading,
-      isBuffering: isBuffering ?? this.isBuffering,
     );
   }
 }
@@ -49,7 +46,7 @@ class VideoPlayerNotifier extends StateNotifier<VideoPlayerState> {
 
   Future<void> initializeController(String videoPath) async {
     // 기존 컨트롤러가 있다면 해제
-    state.controller?.dispose();
+    // state.controller?.dispose();
 
     final controller = VideoPlayerController.file(File(videoPath));
     await controller.initialize();
