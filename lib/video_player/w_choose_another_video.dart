@@ -13,7 +13,7 @@ class WChooseAnotherVideo extends ConsumerWidget {
       top: 0,
       right: 0,
       child: IconButton(
-        onPressed: videoNotifier.onLogoTapToChooseAnotherVideo,
+        onPressed: videoNotifier.tapToChooseVid,
         icon: const Icon(Icons.photo_camera_back),
         color: Colors.white,
       ),

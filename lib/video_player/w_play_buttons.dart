@@ -7,10 +7,8 @@ class WPlayButtons extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final isPlaying = ref.watch(videoPlayerProvider);
-    final onRewind = ref.read(videoPlayerProvider.notifier).onRewind;
-    final onPlayPause = ref.read(videoPlayerProvider.notifier).onPlayPause;
-    final onForward = ref.read(videoPlayerProvider.notifier).onForward;
+    ref.watch(videoPlayerProvider);
+    final notifier = ref.watch(videoPlayerProvider.notifier);
 
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -18,19 +16,19 @@ class WPlayButtons extends ConsumerWidget {
         // 뒤로가기 아이콘버튼
         IconButton(
           color: Colors.white,
-          onPressed: onRewind,
+          onPressed: notifier.onRewind,
           icon: const Icon(Icons.rotate_left),
         ),
         // 재생&정지 아이콘버튼
         IconButton(
           color: Colors.white,
-          onPressed: onPlayPause,
-          icon: Icon(isPlaying ? Icons.pause : Icons.play_arrow),
+          onPressed: notifier.onPlayPause,
+          icon: Icon(notifier.isPlaying ? Icons.pause : Icons.play_arrow),
         ),
         // 앞으로가기 아이콘버튼
         IconButton(
           color: Colors.white,
-          onPressed: onForward,
+          onPressed: notifier.onForward,
           icon: const Icon(Icons.rotate_right),
         ),
       ],

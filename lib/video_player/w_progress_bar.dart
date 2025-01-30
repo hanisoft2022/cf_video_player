@@ -15,11 +15,11 @@ class WProgressBar extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final controller =
-        ref.watch(videoPlayerProvider.notifier).videoPlayerController;
-    final onSliderChanged =
-        ref.read(videoPlayerProvider.notifier).onSliderChanged;
-
+    final controller = ref.watch(videoPlayerProvider.notifier).videoPlayerController;
+    final onSliderChanged = ref.read(videoPlayerProvider.notifier).onSliderChanged;
+    if (controller == null) {
+      return const SizedBox.shrink();
+    }
     return Positioned(
       bottom: 0,
       right: 0,

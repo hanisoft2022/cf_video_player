@@ -10,7 +10,7 @@ class WLogo extends ConsumerWidget {
     final videoNotifier = ref.watch(videoProvider.notifier);
 
     return GestureDetector(
-      onTap: videoNotifier.onLogoTapToChooseAnotherVideo,
+      onTap: videoNotifier.tapToChooseVid,
       child: Image.asset('asset/image/logo.png'),
     );
   }

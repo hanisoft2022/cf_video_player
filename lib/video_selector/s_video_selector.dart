@@ -4,10 +4,7 @@ import 'package:vid_player/video_selector/w_logo.dart';
 import 'package:vid_player/video_selector/w_title.dart';
 
 LinearGradient customGradient() {
-  return const LinearGradient(
-      colors: [Colors.blue, Colors.black],
-      begin: Alignment.topCenter,
-      end: Alignment.bottomCenter);
+  return const LinearGradient(colors: [Colors.blue, Colors.black], begin: Alignment.topCenter, end: Alignment.bottomCenter);
 }
 
 class SVideoSelector extends StatelessWidget {
@@ -16,9 +13,7 @@ class SVideoSelector extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: BoxDecoration(
-        gradient: customGradient(),
-      ),
+      decoration: BoxDecoration(gradient: customGradient()),
       width: double.infinity,
       child: const Column(
         mainAxisAlignment: MainAxisAlignment.center,
