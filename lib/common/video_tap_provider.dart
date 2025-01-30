@@ -8,7 +8,7 @@ final videoTapProvider = StateNotifierProvider<VideoTapNotifier, XFile?>(
 class VideoTapNotifier extends StateNotifier<XFile?> {
   VideoTapNotifier() : super(null);
 
-  Future<void> onLogoTapToChooseAnotherVideo() async {
+  Future<void> onTap() async {
     final XFile? video = await ImagePicker().pickVideo(source: ImageSource.gallery);
 
     state = video;

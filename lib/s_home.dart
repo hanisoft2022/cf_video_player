@@ -16,9 +16,7 @@ class SHome extends ConsumerWidget {
 
     return Scaffold(
       backgroundColor: Colors.black,
-      body: video == null
-          ? SVideoSelector(onTap: notifier.onLogoTapToChooseAnotherVideo)
-          : SVideoPlayer(video: video, onChooseAnotherVideo: notifier.onLogoTapToChooseAnotherVideo),
+      body: video == null ? const SVideoSelector() : SVideoPlayer(video: video, onChooseAnotherVideo: notifier.onTap),
     );
   }
 }
